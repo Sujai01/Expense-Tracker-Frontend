@@ -3,6 +3,7 @@ import AuthLayout from "../../components/layouts/AuthLayout";
 import { useNavigate, Link } from 'react-router-dom';
 import Input from "../../components/Inputs/Input";
 import { validateEmail } from "../../utils/helper";
+import api from "../../utils/api";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -12,24 +13,22 @@ const Login = () => {
   const navigate = useNavigate();
 
   //handle login form submit
-  const handleLogin = async (e) => {
-    e.preventDefault();
+ const handleLogin = async (e) => {
+  e.preventDefault();
+  if (!validateEmail(email)) return setError("Please enter a valid email.");
+  if (!password) return setError("Password is required.");
 
-    if (!validateEmail(email)) {
-      setError("Please enter a valid email address.");
-      return;
+  try {
+    const res = await api.post("/auth/login", { email, password });
+    if (res.data.token) {
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+      navigate("/dashboard");
     }
-
-    if (!password) {
-      setError("Please enter a valid Password.");
-      return;
-    }
-
-    setError("");
-
-    //API call hogi yaha login wali!!!
-  }; // <-- Correct closing
-  
+  } catch (err) {
+    setError(err.response?.data?.message || "Something went wrong. Try again.");
+  }
+};
 
   return (
     <AuthLayout>
