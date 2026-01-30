@@ -22,12 +22,12 @@ A full-stack financial management application built with the MERN stack, featuri
    ```bash
    git clone https://github.com/Sujai01/Expense-Tracker.git
 
-   Backend Setup:
+1. Backend Setup:
 Navigate to /backend
 Run npm install
 Create a .env file and add MONGO_URI, JWT_SECRET, and PORT.
 Start server: npm run dev
-Frontend Setup:
+2. Frontend Setup:
 Navigate to /frontend/expense-tracker
 Run npm install
 Start app: npm run dev
