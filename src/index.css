@@ -1,33 +1,64 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import "tailwindcss";
 
 @theme{
-  --font-display: "Poppins" , "sans-serif";
+  --font-display: "Inter", "sans-serif";
+  --font-sans: "Inter", "sans-serif";
   --breakpoint-3xl: 1920px;
-  --color-primary: #875cf5;
+  --color-primary: #6366f1; /* Indigo-500 */
+  --color-primary-dark: #4f46e5; /* Indigo-600 */
+  --color-surface: #18181b; /* Zinc-900 */
+  --color-surface-hover: #27272a; /* Zinc-800 */
+  --color-background: #09090b; /* Zinc-950 */
 }
 
 @layer base {
-  html{
-    font-family: var(--font-display);
+  html {
+    font-family: var(--font-sans);
     color-scheme: dark;
+    scroll-behavior: smooth;
   }
-  body{
-     background-color: #060606 !important; 
-    color: #ffffff !important;
+  body {
+    background-color: var(--color-background) !important; 
+    color: #f4f4f5 !important; /* Zinc-100 */
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #3f3f46;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #52525b;
+  }
 }
 
+/* Base utility overrides */
 .input-box, input, select, textarea {
-  background-color: #1a1a1a !important;
-  color: white !important;
+  background-color: #18181b !important; /* Zinc-900 */
+  color: #f4f4f5 !important;
   border: 1px solid #27272a !important; /* Zinc-800 */
+  transition: all 0.2s ease-in-out;
+}
+
+.input-box:focus-within, input:focus, select:focus, textarea:focus {
+  border-color: #6366f1 !important; /* Primary Indigo */
+  box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.2) !important;
+  outline: none !important;
 }
 
 .btn-primary {
-  @apply w-full text-sm font-medium text-white bg-[#875cf5] shadow-lg shadow-purple-600/20 p-[10px] rounded-xl my-1 hover:bg-[#7a4de3] transition-all;
+  @apply w-full text-sm font-medium text-white bg-[#6366f1] shadow-lg shadow-indigo-500/25 px-4 py-3 rounded-xl my-1 hover:bg-[#4f46e5] hover:-translate-y-0.5 transition-all duration-200 active:translate-y-0 active:scale-95 flex items-center justify-center;
 }

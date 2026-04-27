@@ -1,13 +1,26 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { LuUser, LuUpload, LuTrash } from "react-icons/lu";
 
 const ProfilePhotoSelector = ({ image, setImage }) => {
     const inputRef = useRef(null);
     const [previewUrl, setPreviewUrl] = useState(null);
 
+    // If image is a string (URL from backend), set it as preview
+    useEffect(() => {
+        if (typeof image === 'string') {
+            setPreviewUrl(image);
+        } else if (image instanceof File) {
+            const url = URL.createObjectURL(image);
+            setPreviewUrl(url);
+            return () => URL.revokeObjectURL(url);
+        } else {
+            setPreviewUrl(null);
+        }
+    }, [image]);
+
     const openDialog = () => {
         if (inputRef.current) {
-            inputRef.current.click();   
+            inputRef.current.click();
         }
     };
 
@@ -15,7 +28,6 @@ const ProfilePhotoSelector = ({ image, setImage }) => {
         const file = event.target.files[0];
         if (file) {
             setImage(file);
-            setPreviewUrl(URL.createObjectURL(file));
         }
     };
 
@@ -34,37 +46,36 @@ const ProfilePhotoSelector = ({ image, setImage }) => {
                 className="hidden"
             />
 
-            {!image ? (
-                
+            {!previewUrl ? (
                 <div
-                    className="w-20 h-20 flex items-center justify-center bg-purple-100 rounded-full relative cursor-pointer"
-                    onClick={openDialog}   
+                    className="w-24 h-24 flex items-center justify-center bg-zinc-900 border-2 border-dashed border-zinc-700 rounded-full relative cursor-pointer group hover:border-indigo-500 transition-colors"
+                    onClick={openDialog}
                 >
-                    <LuUser className="text-4xl text-primary" />
+                    <LuUser className="text-4xl text-zinc-600 group-hover:text-indigo-400 transition-colors" />
 
-                    <button
-                        type="button"
-                        onClick={openDialog}   
-                        className="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full absolute -bottom-1 -right-1"
-                    >
-                        <LuUpload />
-                    </button>
+                    <div className="w-8 h-8 flex items-center justify-center bg-zinc-800 border border-zinc-700 text-zinc-400 group-hover:bg-indigo-600 group-hover:border-indigo-500 group-hover:text-white rounded-full absolute bottom-0 right-0 shadow-lg transition-colors">
+                        <LuUpload size={14} />
+                    </div>
                 </div>
             ) : (
-                <div className="relative w-20 h-20">
-                    <img
-                        src={previewUrl}
-                        alt="Profile"
-                        className="w-full h-full rounded-full object-cover cursor-pointer"
-                        onClick={openDialog}   
-                    />
+                <div className="relative w-24 h-24 group">
+                    <div className="w-full h-full rounded-full overflow-hidden border-2 border-zinc-800 shadow-xl group-hover:border-indigo-500 transition-colors cursor-pointer" onClick={openDialog}>
+                        <img
+                            src={previewUrl}
+                            alt="Profile"
+                            className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm">
+                            <span className="text-xs font-medium text-white shadow-sm">Change</span>
+                        </div>
+                    </div>
 
                     <button
                         type="button"
                         onClick={handleRemoveImage}
-                        className="w-8 h-8 flex items-center justify-center bg-red-500 text-white rounded-full absolute -bottom-1 -right-1 cursor-pointer"
+                        className="w-8 h-8 flex items-center justify-center bg-zinc-900 border border-zinc-800 text-red-400 hover:bg-red-500 hover:text-white hover:border-red-500 rounded-full absolute bottom-0 right-0 shadow-lg transition-all"
                     >
-                        <LuTrash />
+                        <LuTrash size={14} />
                     </button>
                 </div>
             )}

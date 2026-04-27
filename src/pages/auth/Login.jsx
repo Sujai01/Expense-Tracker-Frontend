@@ -32,13 +32,13 @@ const Login = () => {
 
   return (
     <AuthLayout>
-      <div className="lg:w-[70%] h-3/4 md:h-full flex flex-col justify-center">
-        <h3 className="text-xl font-semibold text-black">Welcome Back</h3>
-        <p className="text-xs text-slate-700 mt-1 mb-6">
+      <div className="w-full">
+        <h3 className="text-2xl font-semibold text-white tracking-tight">Welcome Back</h3>
+        <p className="text-sm text-zinc-400 mt-2 mb-8">
           Please enter your details to log in
         </p>
 
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleLogin} className="space-y-2">
           <Input
             value={email}
             onChange={({ target }) => setEmail(target.value)}
@@ -51,20 +51,22 @@ const Login = () => {
             value={password}
             onChange={({ target }) => setPassword(target.value)}
             label="Password"
-            placeholder="Minimum 8 Characters "
+            placeholder="Minimum 8 Characters"
             type="password"
           />
 
-          {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
+          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
-          <button type="submit" className="btn-primary">
-            Login
-          </button>
+          <div className="pt-4">
+            <button type="submit" className="btn-primary py-3.5">
+              Login
+            </button>
+          </div>
 
-          <p className="text-[13px] text-slate-800 mt-3">
+          <p className="text-sm text-zinc-400 mt-6 text-center">
             Don't have an account?{" "}
-            <Link className="font-medium text-primary underline" to="/signup">
-              SignUP
+            <Link className="font-medium text-indigo-400 hover:text-indigo-300 underline underline-offset-4 transition-colors" to="/signup">
+              Sign Up
             </Link>
           </p>
         </form>

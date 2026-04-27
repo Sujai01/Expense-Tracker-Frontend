@@ -58,16 +58,16 @@ const SignUP = () =>{
 
     return(
         <AuthLayout>
-            <div className="lg:w-full h-auto md:h-full mt-10 md:mt-0 flex flex-col justify-center">
-                <h3 className="text-xl font-semibold text-black" >Create an Account</h3>
-                <p className="text-xs text-slate-700 mt-[5px] mb-6">Join us today by entering your details below </p>
+            <div className="w-full">
+                <h3 className="text-2xl font-semibold text-white tracking-tight" >Create an Account</h3>
+                <p className="text-sm text-zinc-400 mt-2 mb-8">Join us today by entering your details below </p>
 
-                <form onSubmit={handleSignUp}>
+                <form onSubmit={handleSignUp} className="space-y-4">
 
                     <ProfilePhotoSelector image={profilePic} setImage={setProfilePic}/>
 
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
                         <Input 
                         value={fullName}
                         onChange={({target}) => setFullName(target.value)}
@@ -83,26 +83,28 @@ const SignUP = () =>{
                         placeholder="somethingrandom@gmail.com"
                         type="text"
                         />
-                        <div className="col-span-2">
+                        <div className="col-span-1 md:col-span-2">
                         <Input
                         value={password}
                         onChange={({ target }) => setPassword(target.value)}
                         label="Password"
-                        placeholder="Minimum 8 Characters "
+                        placeholder="Minimum 8 Characters"
                         type="password"
                         />
                         </div>
 
-                        {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
+                        {error && <p className="text-red-500 text-sm col-span-1 md:col-span-2">{error}</p>}
                         
-                        <button type="submit" className="btn-primary col-span-2">
-                          SIGN UP
-                        </button>
-                        <p className="text-[13px] text-slate-800 mt-3">
-                                    Already have an account?{" "}
-                                    <Link className="font-medium text-primary underline" to="/login">
-                                      LogIn
-                                    </Link>
+                        <div className="col-span-1 md:col-span-2 pt-2">
+                            <button type="submit" className="btn-primary py-3.5">
+                              SIGN UP
+                            </button>
+                        </div>
+                        <p className="text-sm text-zinc-400 mt-6 text-center col-span-1 md:col-span-2">
+                            Already have an account?{" "}
+                            <Link className="font-medium text-indigo-400 hover:text-indigo-300 underline underline-offset-4 transition-colors" to="/login">
+                                Log In
+                            </Link>
                         </p>
                     </div>
                 </form>
